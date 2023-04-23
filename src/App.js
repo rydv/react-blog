@@ -1,4 +1,4 @@
-import Topbar from "./topbar/topbar";
+import Topbar from './components/topbar/topbar'
 import Home from "./pages/Home/Home"
 
 function App() {

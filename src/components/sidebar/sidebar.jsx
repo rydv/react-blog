@@ -1,5 +1,5 @@
 import "./sidebar.css"
-import sidebarImage from '../assets/images/pondi.jpg'
+import sidebarImage from '../../assets/images/pondi.jpg'
 
 export default function Sidebar() {
   return (

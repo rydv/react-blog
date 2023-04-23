@@ -1,5 +1,5 @@
 import "./topbar.css"
-import img from "../assets/images/IMG_6600.jpg"
+import img from "../../assets/images/IMG_6600.jpg"
 
 export default function Topbar() {
   return (
