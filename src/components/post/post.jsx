@@ -3,7 +3,7 @@ import './post.css'
 export default function Post() {
   return (
     <div className="post">
-        <img src="https://lp-cms-production.imgix.net/2019-06/4628f6a36480393d7ea9d15d5c24f9fb-kodaikanal-kodai.jpg" alt="" 
+        <img src="https://media-cdn.tripadvisor.com/media/photo-s/01/0f/98/32/misty-kodai.jpg" alt="" 
         className="postImg" />
         <div className="postInfo">
             <div className="postCats">
