@@ -9,6 +9,7 @@
     /* justify-content: center; */
     font-family: 'Josefin Sans',sans-serif;
     /* flex-direction: row; */
+    z-index: 1;
 }
 
 .topLeft,.topRight{
