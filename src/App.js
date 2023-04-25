@@ -1,13 +1,17 @@
 import Topbar from './components/topbar/topbar'
 import Home from "./pages/Home/Home"
-import Single from './pages/Home/single/single';
-import Write from './pages/Home/write/Write';
+import Single from './pages/single/single';
+import Write from './pages/write/Write';
+import Settings from './pages/settings/Settings';
 
 function App() {
   return (
     <>
     <Topbar />
-    <Write />
+    {/* <Home /> */}
+    {/* <Single /> */}
+    {/* <Write /> */}
+    <Settings/>
     </>
   );
 }
