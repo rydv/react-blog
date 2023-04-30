@@ -14,35 +14,76 @@ router.post("/", async (req,res)=>{
 });
 
 //UPDATE POST
-router.delete("/:id", async (req,res)=>{
-    if(req.body.userId === req.params.id){
+router.put("/:id", async (req,res)=>{
+    
         try {
-            const user = await User.findById(req.params.id);
-            try {
-                console.log(user)
-                await Post.deleteMany({username: user.username});
-                await User.findByIdAndDelete(req.params.id)
-                res.status(200).json("User has been deleted successfully!")
-            } catch (err) {
-                res.status(500).json(err)
-            }
+            const post = await Post.findById(req.params.id);
+                if(post.username === req.body.username){
+                    try {
+                        const updatedPost = await Post.findByIdAndUpdate(req.params.id,{
+                            $set: req.body
+                        },{new:true});
+                        res.status(200).json(updatedPost)
+                    } catch (err) {
+                        res.status(500).json(err)
+                    }
+                } else {
+                    res.status(401).json("You cannot update other's post")
+                }
         } catch (err) {
-            res.status(404).json("User not found!")
+            res.status(500).json(err)
         }
-    } else {
-        res.status(401).json("You are not allowed to delete some one else's account!")
-    }
 });
 
 //DELETE POST
+router.delete("/:id", async (req,res)=>{
+    try {
+        const post = await Post.findById(req.params.id);
+            if(post.username === req.body.username){
+                try {
+                    console.log('to delete post')
+                    // await post.delete();
+                    await Post.findByIdAndDelete(req.params.id);
+                    res.status(200).json('Post Deleted')
+                } catch (err) {
+                    res.status(500).json(err)
+                }
+            } else {
+                res.status(401).json("You are not authorized to delete this post!")
+            }
+    } catch (err) {
+        res.status(500).json(err)
+    }
+});
+
 
 //GET POST
 router.get("/:id", async (req,res)=>{
     try {
-        const user = await User.findById(req.params.id);
-        const {password, ...others}=user._doc;
-        res.status(200).json(others)
-    } catch (error) {
+        const post  = await Post.findById(req.params.id);
+        res.status(200).json(post)
+    } catch (err) {
+        res.status(500).json(err)
+    }
+})
+
+//GET POST
+router.get("/", async (req,res)=>{
+    const username = req.query.user;
+    const category = req.query.cat;
+    try {
+        let posts;
+        if(username){
+            posts = await Post.find({username:username})
+        } else if (category){
+            posts = await Post.find({categories:{
+                $in: [category],
+            }});
+        } else {
+            posts = await Post.find();
+        }
+        res.status(200).json(posts)
+    } catch (err) {
         res.status(500).json(err)
     }
 })
