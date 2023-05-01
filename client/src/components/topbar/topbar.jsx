@@ -1,9 +1,11 @@
 import "./topbar.css"
 import img from "../../assets/images/IMG_6600.jpg"
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { Context } from "../../context/Context";
 
 export default function Topbar() {
-  const user=false;
+  const user=useContext(Context);
   return (
     <div className='top'>
         <div className="topLeft">
