@@ -13,9 +13,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch({type:"LOGIN_START"});
-    console.log(('about to login'))
     try {
-      console.log('login in')
       const res = await axios.post("/auth/login", {
         username: userRef.current.value,
         password: passwordRef.current.value,
