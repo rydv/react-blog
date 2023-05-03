@@ -4,3 +4,10 @@
     flex-wrap: wrap;
     margin: 40px;
 }
+
+.posts12{
+    flex: 12;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 40px;
+}

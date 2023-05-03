@@ -2,13 +2,15 @@ import Header from "../../components/header/header";
 import Sidebar from "../../components/sidebar/sidebar";
 import Posts from "../../components/posts/posts";
 import "./home.css";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
+import { Context } from "../../context/Context";
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
   const {search} = useLocation();
+  const {user} = useContext(Context);
 
   useEffect(()=>{
     console.log(search)
@@ -23,7 +25,7 @@ export default function Home() {
     <Header />
     <div className="home">
         <Posts posts={posts}/>
-        <Sidebar />
+        {user && <Sidebar />}
     </div>
     </>
   )
