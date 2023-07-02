@@ -2,36 +2,48 @@ import { useContext, useState } from 'react'
 import './write.css';
 import axios from 'axios';
 import { Context } from '../../context/Context';
+import storage from '../../firebase';
 
 export default function Write() {
     const [title,setTitle] = useState("");
     const [desc,setDesc] = useState("");
     const [file,setFile] = useState("");
     const {user} = useContext(Context);
+    const [loading, setLoading] = useState(false);
+
+    const loadFile = async (file) => {
+        const fileName= Date.now()+file.name;
+                
+        try {
+            console.log('loading file')
+            const uploadRef = storage.ref(`/image_assets/${fileName}`)
+            console.log('not failed at this')
+            await uploadRef.put(file);
+            return await uploadRef.getDownloadURL()
+        } catch (err) {
+            console.log('Error while uploading file: '+err)
+        }
+    }
 
     const handleSubmit = async (e) =>{
+        setLoading(true)
         e.preventDefault();
         const newPost = {
             username:user.username,
             title,
             desc}
         if (file){
-            const data = new FormData();
-            const filename= Date.now()+file.name;
-            data.append("name",filename);
-            data.append("file",file);
-            newPost.photo = filename;
-            try {
-                await axios.post("/upload", data)
-            } catch (err) {
-                console.log('Error while uploading file: '+err)
-            }
-        }
+                const url = await loadFile(file)
+                newPost.photo = url.toString()
+            }   
         try {
+            console.log(newPost)
             const res = await axios.post('/posts/',newPost);
             window.location.replace("/post/"+res.data._id);
         } catch (err) {
             console.log('Error while creating new post: '+ err)
+        } finally {
+            setLoading(false)
         }
     }
   return (
@@ -57,7 +69,9 @@ export default function Write() {
                     onChange={(e)=>setDesc(e.target.value)}
                 ></textarea>
             </div>
-            <button className="writeSubmit" type='submit'>Publish</button>
+            {loading ?
+            <button className="writeSubmit" type='submit'>Publishing ...</button>
+        : <button className="writeSubmit" type='submit'>Publish</button>}
         </form>
     </div>
   )
