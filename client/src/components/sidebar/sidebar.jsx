@@ -9,7 +9,7 @@ export default function Sidebar() {
 
     useEffect(()=>{
         const getCats = async () => {
-            const res = await axios.get(`/categories/`);
+            const res = await axios.get(`https://shareviablog.onrender.com/api/categories/`);
             // console.log(res)
             setCats(res.data)
         }

@@ -13,7 +13,7 @@ export default function Register() {
     e.preventDefault();
     try {
       setError(false)
-      const res = await axios.post('/auth/register',{
+      const res = await axios.post('https://shareviablog.onrender.com/api/auth/register',{
         username : username,
         email : email,
         password : password

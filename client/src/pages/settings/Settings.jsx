@@ -28,14 +28,14 @@ export default function Settings() {
         data.append("name",filename);
         data.append("file",file);
         try {
-            await axios.post("/upload", data)
+            await axios.post("https://shareviablog.onrender.com/api/upload", data)
             updatedUser.profilePic = filename;
         } catch (err) {
             console.log('Error while uploading file: '+err)
         }
     }
     try {
-        const res = await axios.put('/users/'+user._id,updatedUser);
+        const res = await axios.put('https://shareviablog.onrender.com/api/users/'+user._id,updatedUser);
         setSuccess(true);
         dispatch({type:'UPDATE_SUCCESS', payload: res.data})
     } catch (err) {
